@@ -33,6 +33,7 @@ CREATE TABLE Departments(
 
 CREATE TABLE Teacher(
     teacher_id INT NOT NULL,
+    department_id INT NOT NULL
     course_id INT NOT NULL,
     academicSession_id INT NOT NULL,
     assists_id INT NOT NULL,
@@ -68,7 +69,6 @@ CREATE TABLE InformationBasicTeacher(
     namee VARCHAR(255) NOT NULL,
     lastName VARCHAR(255) NOT NULL,
     phoneNum INT NOT NULL,
-    department_id INT NOT NULL
 );
 
 CREATE TABLE Alumns(
@@ -104,14 +104,26 @@ ALTER TABLE Teacher ADD CONSTRAINT pk_teacher_id PRIMARY KEY(teacher_id);
 ALTER TABLE Teacher ADD CONSTRAINT fk_Departments_Teacher FOREIGN KEY (teacher_id)REFERENCES Departments(departments_id);
 ALTER TABLE Teacher ADD CONSTRAINT pk_TimeConexion_Teacher FOREIGN KEY (teacher_id)REFERENCES TimeConexion(timeConexion_id);
 ALTER TABLE Teacher ADD CONSTRAINT pk_AcademicSession_Teacher FOREIGN KEY(teacher_id) REFERENCES AcademicSession (academicSession_id);
-
-
+ALTER TABLE Teacher ADD CONSTRAINT pk_Assists_Teacher FOREIGN KEY (teacher_id) REFERENCES Assists(assists_id);
+ALTER TABLE Teacher ADD CONSTRAINT pk_Courses_Teacher FOREIGN KEY (teacher_id) REFERENCES Courses(course_id);
+ALTER TABLE Teacher ADD CONSTRAINT pk_Results_Teacher FOREIGN KEY (teacher_id) REFERENCES Results(results_id);
 
 ALTER TABLE InformationBasic ADD CONSTRAINT pk_document_id PRIMARY KEY(document);
-ALTER TABLE Results ADD CONSTRAINT pk_results_id PRIMARY KEY(results_id);
+
+
+ALTER TABLE Results ADD CONSTRAINT pk_results_id PRIMARY KEY
+(results_id);
+
+
 ALTER TABLE Exam ADD CONSTRAINT pk_exam_id PRIMARY KEY(exam_id);
+
+
 ALTER TABLE Assists ADD CONSTRAINT pk_assists_id PRIMARY KEY(assists_id);
+
+
 ALTER TABLE InformationBasicTeacher ADD CONSTRAINT pk_informationBasicTeacher_id PRIMARY KEY(informationBasicTeacher_id);
+ALTER TABLE InformationBasicTeacher DROP COLUMN department_id;
+
 
 ALTER TABLE Alumns ADD CONSTRAINT pk_alumn_id PRIMARY KEY(alumn_id);
 ALTER TABLE Alumns DROP COLUMN academicSessions_id;
@@ -119,7 +131,7 @@ ALTER TABLE Alumns DROP COLUMN faculty_id;
 ALTER TABLE Alumns ADD COLUMN department_id INT NOT NULL;
 
 
-ALTER TABLE Courses ADD CONSTRAINT pk_courses_id PRIMARY KEY(courses_id);
+ALTER TABLE Courses ADD CONSTRAINT pk_courses_id PRIMARY KEY(course_id);
 
 
 ALTER TABLE TimeConexion ADD CONSTRAINT pk_timeConexion_id PRIMARY KEY(timeConexion_id);
